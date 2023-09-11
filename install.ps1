@@ -1,7 +1,49 @@
 #!/usr/bin/env powershell
 
-# Import the tomli module
-Import-Module tomli
+# Define the path to the script directory
+$ScriptDirectory = $PSScriptRoot
+
+# Define the path to the configs directory
+$ConfigsDirectory = Join-Path -Path $ScriptDirectory -ChildPath "configs"
+
+# Get the installed PowerShell version
+$psVersion = $PSVersionTable.PSVersion
+
+# Define the minimum required version (required for PSTiml)
+$minVersion = [version]'7.2'
+
+# Check if the installed version is equal to or greater than the minimum required version
+if ($psVersion -ge $minVersion) {
+  Write-Host "✓ PowerShell version $($psVersion.ToString()) is equal to or newer than 7.2."
+}
+else {
+  Write-Host "✘ PowerShell version $($psVersion.ToString()) is older than 7.2. Please update PowerShell."
+  exit 1  # Exit the script with a non-zero exit code to indicate an error.
+}
+
+# Function to check if PSToml module is installed and install it if necessary
+function Ensure-PSTomlModule {
+  $moduleName = "PSToml"
+  if (-not (Get-Module -Name $moduleName -ListAvailable)) {
+    Write-Host "Installing $moduleName module..."
+    Install-Module -Name $moduleName -Scope CurrentUser -Force
+  }
+}
+
+# Call the function to ensure PSToml module is installed
+Ensure-PSTomlModule
+
+try {
+  # Attempt to import the "tomli" module
+  Import-Module -Name PSToml
+
+  # Attempt to parse TOML content
+  $dependencies = Get-Content -Path (Join-Path -Path $ConfigsDirectory -ChildPath "progs.toml") | ConvertFrom-Toml
+}
+catch {
+  Write-Error "An error occurred: $($_.Exception.Message)"
+  exit 1
+}
 
 # Function to install Chocolatey
 function Install-Chocolatey {
@@ -44,15 +86,6 @@ function Install-WingetPackages {
   }
 }
 
-# set script dir
-$ScriptDirectory = $PSScriptRoot
-
-# set configs dir
-$ConfigsDirectory = "$ScriptDirectory\configs"
-
-# Read the TOML file
-$dependencies = Get-Content -Path $ConfigsDirectory\progs.toml | ConvertFrom-Toml
-
 # Install Chocolatey (if not already installed)
 Install-Chocolatey
 
@@ -65,10 +98,10 @@ Install-ChocolateyPackages -packages $dependencies.choco.progs
 # Install winget packages
 Install-WingetPackages -packages $dependencies.winget.progs
 
-Copy-Item "$ConfigsDirectory\profile.ps1" $PROFILE.AllUsersAllHosts -Force
+Copy-Item (Join-Path -Path $ConfigsDirectory -ChildPath "profile.ps1") $PROFILE.AllUsersAllHosts -Force
 
 # move ahk script
-$sourceFile = "$ConfigsDirectory/shortcuts.ahk"
+$sourceFile = (Join-Path -Path $ConfigsDirectory -ChildPath "shortcuts.ahk")
 $autostartDir = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 
 # Copy the file to the Autostart directory
