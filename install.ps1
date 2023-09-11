@@ -106,3 +106,9 @@ $autostartDir = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 
 # Copy the file to the Autostart directory
 Copy-Item -Path $sourceFile -Destination $autostartDir
+
+$url = "https://gist.githubusercontent.com/floork/363314e2b1263bacc826c53439c280ec/raw/b5b55d0893c02366b71ca78e05a58f8ce536f16f/starship.toml"
+$outputPath = "~/.config/starship.toml"
+Invoke-WebRequest -Uri $url -OutFile $outputPath
+
+Add-Content -Path "$env:LocalAppData\clink\starship.lua" -Value "load(io.popen('starship init cmd'):read("*a"))()"

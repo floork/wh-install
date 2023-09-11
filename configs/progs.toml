@@ -12,12 +12,14 @@ progs = [
   "ea-app",
   "eartrumpet",
   "element-desktop",
+  "firacode",
   "flameshot",
   "gimp",
   "git",
   "inkscape",
   "libreoffice",
   "microsoft-teams",
+  "nerd-fonts-meslo",
   "nodejs",
   "obs",
   "obsidian",
@@ -34,6 +36,7 @@ progs = [
   "starship",
   "steam",
   "ubisoft-connect",
+  "vim",
   "vlc",
   "wireshark"
 ]
