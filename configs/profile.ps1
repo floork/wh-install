@@ -8,7 +8,7 @@ function Start-ElevatedSession {
     $Command
   )
   $Params = @{
-    FilePath = 'Powershell.exe'
+    FilePath = 'wt.exe'
     Wait     = $true
     Verb     = 'RunAs'
   }
