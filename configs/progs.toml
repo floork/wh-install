@@ -1,0 +1,42 @@
+[choco]
+progs = [
+  "7zip",
+  "adobereader",
+  "audacity",
+  "bitwarden",
+  "blender",
+  "blender",
+  "brave",
+  "discord",
+  "dotnet",
+  "ea-app",
+  "eartrumpet",
+  "element-desktop",
+  "flameshot",
+  "gimp",
+  "git",
+  "inkscape",
+  "libreoffice",
+  "microsoft-teams",
+  "nodejs",
+  "obs",
+  "obsidian",
+  "openjdk",
+  "postman",
+  "powertoys",
+  "putty",
+  "python",
+  "qbittorrent",
+  "rust",
+  "rustdesk",
+  "signal",
+  "slack",
+  "starship",
+  "steam",
+  "ubisoft-connect",
+  "vlc",
+  "wireshark"
+]
+
+[winget]
+progs = ["TeamViewer.TeamViewer"]
