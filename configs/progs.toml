@@ -27,6 +27,7 @@ progs = [
   "openjdk",
   "postman",
   "powertoys",
+  "prismlauncher",
   "putty",
   "python",
   "qbittorrent",
