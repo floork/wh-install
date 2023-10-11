@@ -4,6 +4,10 @@ SetWorkingDir %A_ScriptDir%
 
 #IfWinActive  ; Conditional activation based on the active window
 
+; switch esc and caps
+Capslock::Esc
+Esc::Capslock
+
 ; Kill Focused Window
 #q::WinClose, A
 
